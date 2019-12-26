@@ -1,0 +1,28 @@
+{
+  "name": "find-the-pairs",
+  "version": "0.0.1",
+  "description": "A memory game written in JavaScript",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gkatai/find-the-pairs.git"
+  },
+  "keywords": [
+    "memory-game",
+    "pairs-game"
+  ],
+  "author": "gkatai",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gkatai/find-the-pairs/issues"
+  },
+  "homepage": "https://github.com/gkatai/find-the-pairs#readme",
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-plugin-prettier": "^3.1.2",
+    "prettier": "^1.19.1"
+  }
+}
