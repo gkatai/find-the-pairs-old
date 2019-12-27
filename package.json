@@ -24,6 +24,7 @@
   "homepage": "https://github.com/gkatai/find-the-pairs#readme",
   "devDependencies": {
     "@babel/core": "^7.7.7",
+    "@babel/plugin-transform-react-jsx": "^7.7.7",
     "@babel/preset-env": "^7.7.7",
     "babel-loader": "^8.0.6",
     "eslint": "^6.8.0",
@@ -37,6 +38,7 @@
     "webpack-dev-server": "^3.10.1"
   },
   "dependencies": {
-    "immer": "^5.1.0"
+    "immer": "^5.1.0",
+    "petit-dom": "^0.3.3"
   }
 }
