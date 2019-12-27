@@ -39,6 +39,7 @@
   },
   "dependencies": {
     "immer": "^5.1.0",
-    "petit-dom": "^0.3.3"
+    "petit-dom": "^0.3.3",
+    "redux": "^4.0.5"
   }
 }

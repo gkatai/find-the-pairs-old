@@ -1,3 +1,15 @@
+import { createStore, combineReducers } from 'redux';
+import { boardReducer } from './game-logic/board/board-reducer';
+import * as boardActions from './game-logic/board/board-actions';
+
+const store = createStore(combineReducers({ boardReducer }));
+
+console.log(store.getState());
+
+store.dispatch(boardActions.increment(2));
+
+console.log(store.getState());
+
 // eslint-disable-next-line no-unused-vars
 import { h, render } from 'petit-dom';
 
