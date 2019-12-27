@@ -81,6 +81,25 @@ describe('Board', () => {
     });
   });
 
+  describe('unlock', () => {
+    it('should unlock the board', () => {
+      const state = {
+        board: {
+          isLocked: true
+        }
+      };
+      const expectedResult = {
+        board: {
+          isLocked: false
+        }
+      };
+
+      const result = board.unlock(state);
+
+      expect(result).toEqual(expectedResult);
+    });
+  });
+
   describe('flip and evaluate', () => {
     it('when invalid block is flipped', () => {
       const state = {

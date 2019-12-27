@@ -4,6 +4,7 @@ const board = {
   ifFlipIsValid,
   flip,
   evaluate,
+  unlock,
   flipAndEvaluate
 };
 
@@ -40,6 +41,12 @@ function evaluate(flippedElements, blocks) {
   }
 
   return { isMatch: false };
+}
+
+function unlock(state) {
+  return produce(state, draftState => {
+    draftState.board.isLocked = false;
+  });
 }
 
 function flipAndEvaluate(state) {
