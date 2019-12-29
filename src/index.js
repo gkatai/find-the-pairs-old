@@ -4,7 +4,10 @@ import { createStore, combineReducers } from 'redux';
 import { boardReducer } from './game-logic/board/board-reducer';
 import * as boardActions from './game-logic/board/board-actions';
 
-const store = createStore(combineReducers({ boardReducer }));
+const store = createStore(
+  combineReducers({ boardReducer }),
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
 
 const parentNode = document.getElementById('app');
 
