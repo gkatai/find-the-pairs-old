@@ -5,7 +5,13 @@ const board = {
   flip,
   evaluate,
   unlock,
-  flipAndEvaluate
+  flipAndEvaluate,
+  states: {
+    inactive: 'INACTIVE',
+    loading: 'LOADING',
+    loaded: 'LOADED',
+    loadError: 'LOAD_ERROR'
+  }
 };
 
 export default board;

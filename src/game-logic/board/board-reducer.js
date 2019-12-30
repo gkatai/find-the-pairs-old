@@ -1,19 +1,32 @@
-import * as boardActions from './board-actions';
+import produce from 'immer';
+import * as types from './board-action-types';
+import board from './board';
 
 const initialState = {
-  count: 0,
+  state: board.states.inactive,
   board: {
-    blocks: [1, 1, 2, 2],
+    width: 5,
+    blocks: [],
     isLocked: false
   },
-  selectedIndex: 1,
-  flippedElements: [0]
+  flippedElements: []
 };
 
-export function boardReducer(state = initialState, action) {
+export default function boardReducer(state = initialState, action) {
   switch (action.type) {
-    case boardActions.INCREMENT:
-      return Object.assign({}, state, { count: state.count + action.count });
+    case types.REQUEST_TILES:
+      return produce(state, draftState => {
+        draftState.state = board.states.loading;
+      });
+    case types.RECEIVE_TILES:
+      return produce(state, draftState => {
+        draftState.state = board.states.loaded;
+        draftState.board.blocks = action.tiles;
+      });
+    case types.RECEIVE_TILES_ERROR:
+      return produce(state, draftState => {
+        draftState.state = board.states.loadError;
+      });
     default:
       return state;
   }

@@ -33,6 +33,7 @@
     "eslint-plugin-prettier": "^3.1.2",
     "jest": "^24.9.0",
     "prettier": "^1.19.1",
+    "redux-mock-store": "^1.5.4",
     "webpack": "^4.41.4",
     "webpack-cli": "^3.3.10",
     "webpack-dev-server": "^3.10.1"
@@ -40,6 +41,7 @@
   "dependencies": {
     "immer": "^5.1.0",
     "petit-dom": "^0.3.3",
-    "redux": "^4.0.5"
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0"
   }
 }

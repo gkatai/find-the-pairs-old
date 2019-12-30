@@ -1,8 +1,7 @@
 // eslint-disable-next-line no-unused-vars
 import { h, render } from 'petit-dom';
 import { createStore, combineReducers } from 'redux';
-import { boardReducer } from './game-logic/board/board-reducer';
-import * as boardActions from './game-logic/board/board-actions';
+import boardReducer from './game-logic/board/board-reducer';
 
 const store = createStore(
   combineReducers({ boardReducer }),
@@ -17,16 +16,7 @@ store.subscribe(() => {
   view(store.getState());
 });
 
+// eslint-disable-next-line no-unused-vars
 function view(state) {
-  render(
-    <div>
-      <p onclick={handleIncrementClick}>Increment</p>
-      <p>Count: {state.boardReducer.count}</p>
-    </div>,
-    parentNode
-  );
-}
-
-function handleIncrementClick() {
-  store.dispatch(boardActions.increment(1));
+  render(<div />, parentNode);
 }
