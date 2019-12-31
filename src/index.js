@@ -32,7 +32,7 @@ function renderBoard(boardState) {
     case board.states.loaded:
       return (
         <div class="square-container" style={`transform: scale(${getAspectRatio()})`}>
-          {renderBlocks(boardState.board.blocks)}
+          {renderBlocks(boardState.board.blocks, boardState.flippedElements)}
         </div>
       );
   }
@@ -48,12 +48,20 @@ function getAspectRatio() {
   return 1;
 }
 
-function renderBlocks(blocks) {
-  return blocks.map(block => (
+function renderBlocks(blocks, flippedElements) {
+  return blocks.map((block, key) => (
     <div class="square" key={block.id}>
-      <div class="content">{<img class="gallery__img" src={block.url} />}</div>
+      {renderBlock(block, key)}
     </div>
   ));
+
+  function renderBlock(block, key) {
+    if (flippedElements.includes(key)) {
+      return <div class="content">{<img class="gallery__img" src={block.url} />}</div>;
+    }
+
+    return <div class="back-side gallery__img"></div>;
+  }
 }
 
 // fetch the tiles
