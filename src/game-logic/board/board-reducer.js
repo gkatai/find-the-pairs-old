@@ -27,6 +27,10 @@ export default function boardReducer(state = initialState, action) {
       return produce(state, draftState => {
         draftState.state = board.states.loadError;
       });
+    case types.FLIP_TILE:
+      return produce(state, draftState => {
+        draftState.flippedElements = board.flip(action.index, state.flippedElements);
+      });
     default:
       return state;
   }

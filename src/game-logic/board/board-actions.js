@@ -29,3 +29,10 @@ export function fetchTiles(requestCallback) {
     );
   };
 }
+
+export function flipTile(index) {
+  return {
+    type: types.FLIP_TILE,
+    index
+  };
+}

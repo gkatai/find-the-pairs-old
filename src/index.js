@@ -60,8 +60,12 @@ function renderBlocks(blocks, flippedElements) {
       return <div class="content">{<img class="gallery__img" src={block.url} />}</div>;
     }
 
-    return <div class="back-side gallery__img"></div>;
+    return <div class="back-side gallery__img" onclick={() => handleBlockClick(key)}></div>;
   }
+}
+
+function handleBlockClick(key) {
+  store.dispatch(boardActions.flipTile(key));
 }
 
 // fetch the tiles

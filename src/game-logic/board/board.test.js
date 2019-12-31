@@ -45,6 +45,12 @@ describe('Board', () => {
 
       expect(result).toEqual([2]);
     });
+
+    it('should not add the same element multiple times', () => {
+      const result = board.flip(1, [1]);
+
+      expect(result).toEqual([1]);
+    });
   });
 
   describe('evaluate', () => {

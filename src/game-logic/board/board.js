@@ -27,6 +27,10 @@ function ifFlipIsValid(index, blocks) {
 function flip(index, flippedElements) {
   let result;
 
+  if (flippedElements.includes(index)) {
+    return flippedElements;
+  }
+
   if (flippedElements.length === 2) {
     result = [];
   } else {

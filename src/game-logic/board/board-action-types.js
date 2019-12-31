@@ -1,3 +1,4 @@
 export const REQUEST_TILES = 'REQUEST_TILES';
 export const RECEIVE_TILES = 'RECEIVE_TILES';
 export const RECEIVE_TILES_ERROR = 'RECEIVE_TILES_ERROR';
+export const FLIP_TILE = 'FLIP_TILE';

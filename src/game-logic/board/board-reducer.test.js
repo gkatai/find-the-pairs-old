@@ -38,4 +38,14 @@ describe('Board reducer', () => {
       expect(newState.state).toEqual(board.states.loadError);
     });
   });
+
+  describe('flip tile', () => {
+    it('should add the tile index to the flipped blocks array', () => {
+      const initialState = { flippedElements: [], board: {} };
+
+      const newState = boardReducer(initialState, { type: types.FLIP_TILE, index: 3 });
+
+      expect(newState.flippedElements).toEqual([3]);
+    });
+  });
 });
