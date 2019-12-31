@@ -30,9 +30,22 @@ export function fetchTiles(requestCallback) {
   };
 }
 
-export function flipTile(index) {
+function setSelectedIndex(index) {
   return {
-    type: types.FLIP_TILE,
+    type: types.SET_SELECTED_INDEX,
     index
+  };
+}
+
+function flipAndEvaluateTile() {
+  return {
+    type: types.FLIP_AND_EVALUATE_TILE
+  };
+}
+
+export function flipTile(index) {
+  return function(dispatch) {
+    dispatch(setSelectedIndex(index));
+    dispatch(flipAndEvaluateTile());
   };
 }

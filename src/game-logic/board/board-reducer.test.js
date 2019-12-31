@@ -39,13 +39,23 @@ describe('Board reducer', () => {
     });
   });
 
+  describe('set selected index', () => {
+    it('should set the selected index', () => {
+      const initialState = { board: {} };
+
+      const newState = boardReducer(initialState, { type: types.SET_SELECTED_INDEX, index: 5 });
+
+      expect(newState.selectedIndex).toBe(5);
+    });
+  });
+
   describe('flip tile', () => {
     it('should add the tile index to the flipped blocks array', () => {
-      const initialState = { flippedElements: [], board: {} };
+      jest.spyOn(board, 'flipAndEvaluate');
+      const initialState = { flippedElements: [], board: { blocks: [] } };
 
-      const newState = boardReducer(initialState, { type: types.FLIP_TILE, index: 3 });
-
-      expect(newState.flippedElements).toEqual([3]);
+      boardReducer(initialState, { type: types.FLIP_AND_EVALUATE_TILE, index: 3 });
+      expect(board.flipAndEvaluate).toHaveBeenCalledTimes(1);
     });
   });
 });

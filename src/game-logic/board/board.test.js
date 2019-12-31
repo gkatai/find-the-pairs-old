@@ -71,7 +71,7 @@ describe('Board', () => {
     });
 
     it('when flip array elements are matching', () => {
-      const expectedResult = { updatedBlocks: [0, 0, 2, 2], isMatch: true };
+      const expectedResult = { updatedBlocks: [-1, -1, 2, 2], isMatch: true };
 
       const result = board.evaluate([0, 1], [1, 1, 2, 2]);
 
@@ -165,7 +165,7 @@ describe('Board', () => {
       };
       const expectedResult = {
         board: {
-          blocks: [0, 0, 2, 2],
+          blocks: [-1, -1, 2, 2],
           isLocked: true
         },
         selectedIndex: undefined,

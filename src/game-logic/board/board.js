@@ -45,8 +45,8 @@ function flip(index, flippedElements) {
 function evaluate(flippedElements, blocks) {
   if (flippedElements.length === 2 && blocks[flippedElements[0]] === blocks[flippedElements[1]]) {
     const updatedBlocks = [...blocks];
-    updatedBlocks[flippedElements[0]] = 0;
-    updatedBlocks[flippedElements[1]] = 0;
+    updatedBlocks[flippedElements[0]] = -1;
+    updatedBlocks[flippedElements[1]] = -1;
     return { updatedBlocks, isMatch: true };
   }
 

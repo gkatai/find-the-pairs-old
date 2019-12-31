@@ -29,4 +29,15 @@ describe('Board actions', () => {
       });
     });
   });
+
+  describe('flip and evaluate tile', () => {
+    it('should create SET_SELECTED_INDEX and FLIP_AND_EVALUATE_TILE actions', () => {
+      const expectedActions = [{ type: types.SET_SELECTED_INDEX, index: 5 }, { type: types.FLIP_AND_EVALUATE_TILE }];
+      const store = mockStore({ board: {} });
+
+      store.dispatch(actions.flipTile(5));
+
+      expect(store.getActions()).toEqual(expectedActions);
+    });
+  });
 });

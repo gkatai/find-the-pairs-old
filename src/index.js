@@ -56,7 +56,7 @@ function renderBlocks(blocks, flippedElements) {
   ));
 
   function renderBlock(block, key) {
-    if (flippedElements.includes(key)) {
+    if (key === -1 || flippedElements.includes(key)) {
       return <div class="content">{<img class="gallery__img" src={block.url} />}</div>;
     }
 
