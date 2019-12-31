@@ -1,20 +1,19 @@
 body {
   margin: 0;
+  overflow: hidden;
 }
 
 .square-container {
   display: grid;
-  grid-template-columns: repeat(3, 30vw);
-  grid-template-rows: repeat(2, 30vw);
-  grid-gap: 2.5vw;
-  padding: 2.5vw;
-  transform: scale(0.5);
+  grid-template-columns: repeat(4, 21vw);
+  grid-gap: 3vw;
+  padding: 3vw;
   transform-origin: 0 0;
 }
 
 .gallery__img {
-  width: 30vw;
-  height: 30vw;
+  width: 21vw;
+  height: 21vw;
   object-fit: cover;
   display: block;
 }

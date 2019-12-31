@@ -31,12 +31,21 @@ function renderBoard(boardState) {
       return <p>Loading...</p>;
     case board.states.loaded:
       return (
-        <div class="square-container">
+        <div class="square-container" style={`transform: scale(${getAspectRatio()})`}>
           {renderBlocks(boardState.board.blocks)}
-          <div class="square back-side"></div>
         </div>
       );
   }
+}
+
+function getAspectRatio() {
+  const width = window.innerWidth;
+  const height = window.innerHeight;
+  if (width > height) {
+    return height / width;
+  }
+
+  return 1;
 }
 
 function renderBlocks(blocks) {
@@ -49,12 +58,13 @@ function renderBlocks(blocks) {
 
 // fetch the tiles
 const requestCallback = () => {
-  // eslint-disable-next-line no-unused-vars
-  return new Promise((resolve, reject) => {
-    return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=10')
-      .then(response => response.json())
-      .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, url: picture.url }))))
-      .catch(() => reject());
-  });
+  // return new Promise((resolve, reject) => {
+  //   return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=10')
+  //     .then(response => response.json())
+  //     .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, url: picture.url }))))
+  //     .catch(() => reject());
+  // });
+
+  return new Promise(resolve => resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]));
 };
 store.dispatch(boardActions.fetchTiles(requestCallback));
