@@ -19,6 +19,8 @@ body {
 }
 
 .back-side {
+  width: 21vw;
+  height: 21vw;
   background: linear-gradient(
       135deg,
       #708090 21px,

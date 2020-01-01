@@ -56,11 +56,30 @@ function renderBlocks(blocks, flippedElements) {
   ));
 
   function renderBlock(block, key) {
-    if (block.found || flippedElements.includes(key)) {
-      return <div class="content">{<img class="gallery__img" src={block.value} />}</div>;
+    return (
+      <div>
+        <div class="content">
+          <img style={`display: ${getVisibility(isFlipped(block, key))}`} class="gallery__img" src={block.value} />
+          <span
+            class="back-side"
+            style={`display: ${getVisibility(!isFlipped(block, key))}`}
+            onclick={() => handleBlockClick(key)}
+          ></span>
+        </div>
+      </div>
+    );
+  }
+
+  function isFlipped(block, key) {
+    return block.found || flippedElements.includes(key);
+  }
+
+  function getVisibility(visible) {
+    if (visible) {
+      return 'block';
     }
 
-    return <div class="back-side gallery__img" onclick={() => handleBlockClick(key)}></div>;
+    return 'none';
   }
 }
 
