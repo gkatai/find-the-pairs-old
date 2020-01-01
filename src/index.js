@@ -4,7 +4,7 @@ import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import boardReducer from './game-logic/board/board-reducer';
 import * as boardActions from './game-logic/board/board-actions';
-import board from './game-logic/board/board';
+import { boardView } from './board-view';
 import './index.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
@@ -20,71 +20,7 @@ store.subscribe(() => {
 });
 
 function view(state) {
-  render(<div>{renderBoard(state.boardReducer)}</div>, parentNode);
-}
-
-function renderBoard(boardState) {
-  switch (boardState.state) {
-    case board.states.inactive:
-      return <p>Board inactive...</p>;
-    case board.states.loading:
-      return <p>Loading...</p>;
-    case board.states.loaded:
-      return (
-        <div class="square-container" style={`transform: scale(${getAspectRatio()})`}>
-          {renderBlocks(boardState.board.blocks, boardState.flippedElements)}
-        </div>
-      );
-  }
-}
-
-function getAspectRatio() {
-  const width = window.innerWidth;
-  const height = window.innerHeight;
-  if (width > height) {
-    return height / width;
-  }
-
-  return 1;
-}
-
-function renderBlocks(blocks, flippedElements) {
-  return blocks.map((block, key) => (
-    <div class="square" key={key}>
-      {renderBlock(block, key)}
-    </div>
-  ));
-
-  function renderBlock(block, key) {
-    return (
-      <div>
-        <div class="content">
-          <img style={`display: ${getVisibility(isFlipped(block, key))}`} class="gallery__img" src={block.value} />
-          <span
-            class="back-side"
-            style={`display: ${getVisibility(!isFlipped(block, key))}`}
-            onclick={() => handleBlockClick(key)}
-          ></span>
-        </div>
-      </div>
-    );
-  }
-
-  function isFlipped(block, key) {
-    return block.found || flippedElements.includes(key);
-  }
-
-  function getVisibility(visible) {
-    if (visible) {
-      return 'block';
-    }
-
-    return 'none';
-  }
-}
-
-function handleBlockClick(key) {
-  store.dispatch(boardActions.flipTile(key));
+  render(<div>{boardView(state.boardReducer, store)}</div>, parentNode);
 }
 
 // fetch the tiles
