@@ -6,10 +6,11 @@ function requestTiles() {
   };
 }
 
-function receiveTiles(tiles) {
+function receiveTiles(tiles, tileRandomizationAlgorithm) {
   return {
     type: types.RECEIVE_TILES,
-    tiles
+    tiles,
+    tileRandomizationAlgorithm
   };
 }
 
@@ -19,12 +20,12 @@ function receiveTilesError() {
   };
 }
 
-export function fetchTiles(requestCallback) {
+export function fetchTiles(requestCallback, tileRandomizationAlgorithm) {
   return function(dispatch) {
     dispatch(requestTiles());
 
     return requestCallback().then(
-      tiles => dispatch(receiveTiles(tiles)),
+      tiles => dispatch(receiveTiles(tiles, tileRandomizationAlgorithm)),
       () => dispatch(receiveTilesError())
     );
   };

@@ -50,14 +50,14 @@ function getAspectRatio() {
 
 function renderBlocks(blocks, flippedElements) {
   return blocks.map((block, key) => (
-    <div class="square" key={block.id}>
+    <div class="square" key={key}>
       {renderBlock(block, key)}
     </div>
   ));
 
   function renderBlock(block, key) {
-    if (key === -1 || flippedElements.includes(key)) {
-      return <div class="content">{<img class="gallery__img" src={block.url} />}</div>;
+    if (block.found || flippedElements.includes(key)) {
+      return <div class="content">{<img class="gallery__img" src={block.value} />}</div>;
     }
 
     return <div class="back-side gallery__img" onclick={() => handleBlockClick(key)}></div>;
@@ -70,13 +70,16 @@ function handleBlockClick(key) {
 
 // fetch the tiles
 const requestCallback = () => {
-  // return new Promise((resolve, reject) => {
-  //   return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=10')
-  //     .then(response => response.json())
-  //     .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, url: picture.url }))))
-  //     .catch(() => reject());
-  // });
-
-  return new Promise(resolve => resolve([1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]));
+  return new Promise((resolve, reject) => {
+    return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=8')
+      .then(response => response.json())
+      .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, value: picture.url, found: false }))))
+      .catch(() => reject());
+  });
 };
-store.dispatch(boardActions.fetchTiles(requestCallback));
+
+store.dispatch(boardActions.fetchTiles(requestCallback, randomizationAlgorithm));
+
+function randomizationAlgorithm(pool) {
+  return Math.floor(Math.random() * Math.floor(pool.length));
+}

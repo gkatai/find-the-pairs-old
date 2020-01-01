@@ -2,26 +2,35 @@ import board from './board';
 
 describe('Board', () => {
   describe('ifFlipIsValid', () => {
-    it('should return true if selected element is not yet flipped', () => {
-      const result = board.ifFlipIsValid(0, [1, 1, 2, 2]);
+    it('should return true if selected tile is not yet flipped', () => {
+      const result = board.ifFlipIsValid(0, [
+        { value: 1, flipped: false },
+        { value: 1, flipped: false },
+        { value: 2, flipped: false },
+        { value: 2, flipped: false }
+      ]);
 
       expect(result).toBe(true);
     });
 
-    it('should return false if selected element is already flipped', () => {
-      const result = board.ifFlipIsValid(0, [0, 0, 2, 2]);
+    it('should return false if selected tile is already flipped', () => {
+      const result = board.ifFlipIsValid(0, [
+        { value: 1, flipped: true },
+        { value: 1, flipped: false },
+        { value: 2, flipped: false },
+        { value: 2, flipped: false }
+      ]);
 
       expect(result).toBe(false);
     });
 
-    it('should return false if selected element is bigger then array size', () => {
-      const result = board.ifFlipIsValid(4, [1, 1, 2, 2]);
-
-      expect(result).toBe(false);
-    });
-
-    it('should return false if selected element is smaller than array size', () => {
-      const result = board.ifFlipIsValid(-1, [1, 1, 2, 2]);
+    it('should return false if selected tile is not in the array', () => {
+      const result = board.ifFlipIsValid(4, [
+        { value: 1, flipped: false },
+        { value: 1, flipped: false },
+        { value: 2, flipped: false },
+        { value: 2, flipped: false }
+      ]);
 
       expect(result).toBe(false);
     });
@@ -57,7 +66,7 @@ describe('Board', () => {
     it('when flip array is empty', () => {
       const expectedResult = { isMatch: false };
 
-      const result = board.evaluate([], [1, 1, 2, 2]);
+      const result = board.evaluate([], [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }]);
 
       expect(result).toEqual(expectedResult);
     });
@@ -65,15 +74,18 @@ describe('Board', () => {
     it('when flip array count is 1', () => {
       const expectedResult = { isMatch: false };
 
-      const result = board.evaluate([0], [1, 1, 2, 2]);
+      const result = board.evaluate([0], [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }]);
 
       expect(result).toEqual(expectedResult);
     });
 
     it('when flip array elements are matching', () => {
-      const expectedResult = { updatedBlocks: [-1, -1, 2, 2], isMatch: true };
+      const expectedResult = {
+        updatedBlocks: [{ value: 1, found: true }, { value: 1, found: true }, { value: 2 }, { value: 2 }],
+        isMatch: true
+      };
 
-      const result = board.evaluate([0, 1], [1, 1, 2, 2]);
+      const result = board.evaluate([0, 1], [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }]);
 
       expect(result).toEqual(expectedResult);
     });
@@ -81,7 +93,7 @@ describe('Board', () => {
     it('when flip array elements are not matching', () => {
       const expectedResult = { isMatch: false };
 
-      const result = board.evaluate([0, 2], [1, 1, 2, 2]);
+      const result = board.evaluate([0, 2], [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }]);
 
       expect(result).toEqual(expectedResult);
     });
@@ -110,7 +122,7 @@ describe('Board', () => {
     it('when invalid block is flipped', () => {
       const state = {
         board: {
-          blocks: [1, 1, 2, 2],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
           isLocked: false
         },
         selectedIndex: -1,
@@ -118,11 +130,10 @@ describe('Board', () => {
       };
       const expectedResult = {
         board: {
-          blocks: [1, 1, 2, 2],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
           isLocked: false
         },
         selectedIndex: undefined,
-        invalidMessage: true,
         flippedElements: []
       };
 
@@ -134,7 +145,7 @@ describe('Board', () => {
     it('when valid block is flipped and is the first flipped one', () => {
       const state = {
         board: {
-          blocks: [1, 1, 2, 2],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
           isLocked: false
         },
         selectedIndex: 0,
@@ -142,7 +153,7 @@ describe('Board', () => {
       };
       const expectedResult = {
         board: {
-          blocks: [1, 1, 2, 2],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
           isLocked: false
         },
         selectedIndex: undefined,
@@ -157,7 +168,7 @@ describe('Board', () => {
     it('when valid block is flipped and is the second flipped one and is match', () => {
       const state = {
         board: {
-          blocks: [1, 1, 2, 2],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
           isLocked: false
         },
         selectedIndex: 1,
@@ -165,7 +176,7 @@ describe('Board', () => {
       };
       const expectedResult = {
         board: {
-          blocks: [-1, -1, 2, 2],
+          blocks: [{ value: 1, found: true }, { value: 1, found: true }, { value: 2 }, { value: 2 }],
           isLocked: true
         },
         selectedIndex: undefined,

@@ -17,7 +17,7 @@ const board = {
 export default board;
 
 function ifFlipIsValid(index, blocks) {
-  if (index > blocks.length - 1 || index < 0 || blocks[index] === 0) {
+  if (blocks.length === 0 || index < 0 || index >= blocks.length || blocks[index].flipped) {
     return false;
   }
 
@@ -43,11 +43,11 @@ function flip(index, flippedElements) {
 }
 
 function evaluate(flippedElements, blocks) {
-  if (flippedElements.length === 2 && blocks[flippedElements[0]] === blocks[flippedElements[1]]) {
-    const updatedBlocks = [...blocks];
-    updatedBlocks[flippedElements[0]] = -1;
-    updatedBlocks[flippedElements[1]] = -1;
-    return { updatedBlocks, isMatch: true };
+  if (flippedElements.length === 2 && blocks[flippedElements[0]].value === blocks[flippedElements[1]].value) {
+    return produce({ updatedBlocks: blocks, isMatch: true }, draftState => {
+      draftState.updatedBlocks[flippedElements[0]].found = true;
+      draftState.updatedBlocks[flippedElements[1]].found = true;
+    });
   }
 
   return { isMatch: false };
@@ -80,7 +80,6 @@ function flipAndEvaluate(state) {
   }
 
   return produce(state, draftState => {
-    draftState.invalidMessage = true;
     draftState.selectedIndex = undefined;
   });
 }
