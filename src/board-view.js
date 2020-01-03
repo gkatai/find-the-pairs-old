@@ -8,7 +8,7 @@ export function boardView(state, store, resetCallback) {
     case board.states.inactive:
       return <p>Board inactive...</p>;
     case board.states.loading:
-      return <p>Loading...</p>;
+      return <p class="loader">Loading...</p>;
     case board.states.loaded:
       return (
         <div>
@@ -20,13 +20,13 @@ export function boardView(state, store, resetCallback) {
     case board.states.victory:
       return (
         <div>
-          <div class="square-container" style={`transform: scale(${getAspectRatio()}); filter: blur(0.25rem);`}>
+          <div class="square-container" style={`transform: scale(${getAspectRatio()});`}>
             {renderBlocks(state.board.blocks, state.flippedElements, store)}
-          </div>
-          <div class="victory-message" style={'text-align: center'}>
-            <h1>Well done</h1>
-            <h2>Moves: {state.moves}</h2>
-            <button onclick={() => handleResetButton(resetCallback)}>Reset</button>
+            <div class="victory-message" style={'text-align: center'}>
+              <h1>Well done</h1>
+              <h2>Moves: {state.moves}</h2>
+              <button onclick={() => handleResetButton(resetCallback)}>Reset</button>
+            </div>
           </div>
         </div>
       );
