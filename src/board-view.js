@@ -3,7 +3,7 @@ import { h } from 'petit-dom';
 import board from './game-logic/board/board';
 import * as boardActions from './game-logic/board/board-actions';
 
-export function boardView(state, store) {
+export function boardView(state, store, resetCallback) {
   switch (state.state) {
     case board.states.inactive:
       return <p>Board inactive...</p>;
@@ -23,9 +23,10 @@ export function boardView(state, store) {
           <div class="square-container" style={`transform: scale(${getAspectRatio()}); filter: blur(0.25rem);`}>
             {renderBlocks(state.board.blocks, state.flippedElements, store)}
           </div>
-          <div class="victory-message">
+          <div class="victory-message" style={'text-align: center'}>
             <h1>Well done</h1>
-            <h2 styel={'text-align: center'}>Moves: {state.moves}</h2>
+            <h2>Moves: {state.moves}</h2>
+            <button onclick={() => handleResetButton(resetCallback)}>Reset</button>
           </div>
         </div>
       );
@@ -83,4 +84,8 @@ function getVisibility(visible) {
   }
 
   return 'none';
+}
+
+function handleResetButton(resetCallback) {
+  resetCallback();
 }

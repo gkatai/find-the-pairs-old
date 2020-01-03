@@ -20,21 +20,26 @@ store.subscribe(() => {
 });
 
 function view(state) {
-  render(<div>{boardView(state.boardReducer, store)}</div>, parentNode);
+  render(<div>{boardView(state.boardReducer, store, reset)}</div>, parentNode);
 }
 
-// fetch the tiles
-const requestCallback = () => {
-  return new Promise((resolve, reject) => {
-    return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=8')
-      .then(response => response.json())
-      .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, value: picture.url, found: false }))))
-      .catch(() => reject());
-  });
-};
+// start
+reset();
 
-store.dispatch(boardActions.fetchTiles(requestCallback, randomizationAlgorithm));
+function reset() {
+  const requestCallback = () => {
+    return new Promise((resolve, reject) => {
+      return fetch('https://api.thecatapi.com/v1/images/search?size=small&limit=8')
+        .then(response => response.json())
+        .then(pictures => resolve(pictures.map(picture => ({ id: picture.id, value: picture.url, found: false }))))
+        .catch(() => reject());
+    });
+  };
 
-function randomizationAlgorithm(pool) {
-  return Math.floor(Math.random() * Math.floor(pool.length));
+  function randomizationAlgorithm(pool) {
+    return Math.floor(Math.random() * Math.floor(pool.length));
+  }
+
+  store.dispatch(boardActions.reset());
+  store.dispatch(boardActions.fetchTiles(requestCallback, randomizationAlgorithm));
 }

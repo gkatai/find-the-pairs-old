@@ -36,6 +36,14 @@ export default function boardReducer(state = initialState, action) {
       });
     case types.FLIP_AND_EVALUATE_TILE:
       return board.flipAndEvaluate(state);
+    case types.RESET:
+      return produce(state, draftState => {
+        draftState.state = board.states.loading;
+        draftState.board.blocks = [];
+        draftState.board.isLocked = false;
+        draftState.flippedElements = [];
+        draftState.moves = 0;
+      });
     default:
       return state;
   }

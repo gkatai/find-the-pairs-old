@@ -50,3 +50,9 @@ export function flipTile(index) {
     dispatch(flipAndEvaluateTile());
   };
 }
+
+export function reset() {
+  return {
+    type: types.RESET
+  };
+}

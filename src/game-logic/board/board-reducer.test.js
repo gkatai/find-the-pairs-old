@@ -59,6 +59,7 @@ describe('Board reducer', () => {
       const initialState = { board: {}, moves: 0 };
 
       const newState = boardReducer(initialState, { type: types.SET_SELECTED_INDEX, index: 0 });
+
       expect(newState.moves).toBe(1);
     });
   });
@@ -69,7 +70,50 @@ describe('Board reducer', () => {
       const initialState = { flippedElements: [], board: { blocks: [] } };
 
       boardReducer(initialState, { type: types.FLIP_AND_EVALUATE_TILE, index: 3 });
+
       expect(board.flipAndEvaluate).toHaveBeenCalledTimes(1);
+    });
+  });
+
+  describe('reset', () => {
+    it('should set state to loading', () => {
+      const initialState = { state: board.states.victory, board: {} };
+
+      const newState = boardReducer(initialState, { type: types.RESET });
+
+      expect(newState.state).toBe(board.states.loading);
+    });
+
+    it('should set blocks to empty array', () => {
+      const initialState = { board: { blocks: [1, 2, 3, 4] } };
+
+      const newState = boardReducer(initialState, { type: types.RESET });
+
+      expect(newState.board.blocks).toEqual([]);
+    });
+
+    it('should set isLocked to false', () => {
+      const initialState = { board: { isLocked: true } };
+
+      const newState = boardReducer(initialState, { type: types.RESET });
+
+      expect(newState.board.isLocked).toBe(false);
+    });
+
+    it('should set flippedElements to empty array', () => {
+      const initialState = { flippedElements: [2, 3], board: {} };
+
+      const newState = boardReducer(initialState, { type: types.RESET });
+
+      expect(newState.flippedElements).toEqual([]);
+    });
+
+    it('should set moves to 0', () => {
+      const initialState = { moves: 22, board: {} };
+
+      const newState = boardReducer(initialState, { type: types.RESET });
+
+      expect(newState.moves).toBe(0);
     });
   });
 });
