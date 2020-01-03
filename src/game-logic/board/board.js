@@ -10,7 +10,8 @@ const board = {
     inactive: 'INACTIVE',
     loading: 'LOADING',
     loaded: 'LOADED',
-    loadError: 'LOAD_ERROR'
+    loadError: 'LOAD_ERROR',
+    victory: 'VICTORY'
   }
 };
 
@@ -65,7 +66,12 @@ function flipAndEvaluate(state) {
     const evaluationResult = board.evaluate(flippedElements, state.board.blocks);
 
     if (evaluationResult.isMatch) {
+      const isEverythingFound = !evaluationResult.updatedBlocks.some(block => block.found === false);
+
       return produce(state, draftState => {
+        if (isEverythingFound) {
+          draftState.state = board.states.victory;
+        }
         draftState.flippedElements = flippedElements;
         draftState.selectedIndex = undefined;
         draftState.board.isLocked = true;

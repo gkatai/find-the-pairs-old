@@ -168,7 +168,7 @@ describe('Board', () => {
     it('when valid block is flipped and is the second flipped one and is match', () => {
       const state = {
         board: {
-          blocks: [{ value: 1 }, { value: 1 }, { value: 2 }, { value: 2 }],
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2, found: false }, { value: 2, found: false }],
           isLocked: false
         },
         selectedIndex: 1,
@@ -176,7 +176,42 @@ describe('Board', () => {
       };
       const expectedResult = {
         board: {
-          blocks: [{ value: 1, found: true }, { value: 1, found: true }, { value: 2 }, { value: 2 }],
+          blocks: [
+            { value: 1, found: true },
+            { value: 1, found: true },
+            { value: 2, found: false },
+            { value: 2, found: false }
+          ],
+          isLocked: true
+        },
+        selectedIndex: undefined,
+        flippedElements: [0, 1]
+      };
+
+      const result = board.flipAndEvaluate(state);
+
+      expect(result).toEqual(expectedResult);
+    });
+
+    it('when every element is flipped set state to victory', () => {
+      const state = {
+        state: board.states.loaded,
+        board: {
+          blocks: [{ value: 1 }, { value: 1 }, { value: 2, found: true }, { value: 2, found: true }],
+          isLocked: false
+        },
+        selectedIndex: 1,
+        flippedElements: [0]
+      };
+      const expectedResult = {
+        state: board.states.victory,
+        board: {
+          blocks: [
+            { value: 1, found: true },
+            { value: 1, found: true },
+            { value: 2, found: true },
+            { value: 2, found: true }
+          ],
           isLocked: true
         },
         selectedIndex: undefined,

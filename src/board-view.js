@@ -11,8 +11,19 @@ export function boardView(state, store) {
       return <p>Loading...</p>;
     case board.states.loaded:
       return (
-        <div class="square-container" style={`transform: scale(${getAspectRatio()})`}>
-          {renderBlocks(state.board.blocks, state.flippedElements, store)}
+        <div>
+          <div class="square-container" style={`transform: scale(${getAspectRatio()})`}>
+            {renderBlocks(state.board.blocks, state.flippedElements, store)}
+          </div>
+        </div>
+      );
+    case board.states.victory:
+      return (
+        <div>
+          <div class="square-container" style={`transform: scale(${getAspectRatio()}); filter: blur(0.25rem);`}>
+            {renderBlocks(state.board.blocks, state.flippedElements, store)}
+          </div>
+          <h1 class="victory-message">Well done</h1>
         </div>
       );
   }
