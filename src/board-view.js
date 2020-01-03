@@ -23,7 +23,10 @@ export function boardView(state, store) {
           <div class="square-container" style={`transform: scale(${getAspectRatio()}); filter: blur(0.25rem);`}>
             {renderBlocks(state.board.blocks, state.flippedElements, store)}
           </div>
-          <h1 class="victory-message">Well done</h1>
+          <div class="victory-message">
+            <h1>Well done</h1>
+            <h2 styel={'text-align: center'}>Moves: {state.moves}</h2>
+          </div>
         </div>
       );
   }

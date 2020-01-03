@@ -10,7 +10,8 @@ const initialState = {
     blocks: [],
     isLocked: false
   },
-  flippedElements: []
+  flippedElements: [],
+  moves: 0
 };
 
 export default function boardReducer(state = initialState, action) {
@@ -31,6 +32,7 @@ export default function boardReducer(state = initialState, action) {
     case types.SET_SELECTED_INDEX:
       return produce(state, draftState => {
         draftState.selectedIndex = action.index;
+        draftState.moves = state.moves + 1;
       });
     case types.FLIP_AND_EVALUATE_TILE:
       return board.flipAndEvaluate(state);

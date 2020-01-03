@@ -54,6 +54,13 @@ describe('Board reducer', () => {
 
       expect(newState.selectedIndex).toBe(5);
     });
+
+    it('should increment the move count', () => {
+      const initialState = { board: {}, moves: 0 };
+
+      const newState = boardReducer(initialState, { type: types.SET_SELECTED_INDEX, index: 0 });
+      expect(newState.moves).toBe(1);
+    });
   });
 
   describe('flip tile', () => {
