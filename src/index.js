@@ -1,6 +1,6 @@
 // eslint-disable-next-line no-unused-vars
 import { h, render } from 'petit-dom';
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux';
+import { createStore, compose, applyMiddleware } from 'redux';
 import thunkMiddleware from 'redux-thunk';
 import boardReducer from './game-logic/board/board-reducer';
 import * as boardActions from './game-logic/board/board-actions';
@@ -9,7 +9,7 @@ import './index.css';
 
 const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
 
-const store = createStore(combineReducers({ boardReducer }), composeEnhancers(applyMiddleware(thunkMiddleware)));
+const store = createStore(boardReducer, composeEnhancers(applyMiddleware(thunkMiddleware)));
 
 const parentNode = document.getElementById('app');
 
@@ -20,7 +20,7 @@ store.subscribe(() => {
 });
 
 function view(state) {
-  render(<div>{boardView(state.boardReducer, store, reset)}</div>, parentNode);
+  render(<div>{boardView(state, store, reset)}</div>, parentNode);
 }
 
 // start

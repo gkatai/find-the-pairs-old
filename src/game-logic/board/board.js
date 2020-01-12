@@ -1,5 +1,3 @@
-import produce from 'immer';
-
 const board = {
   ifFlipIsValid,
   flip,
@@ -45,19 +43,17 @@ function flip(index, flippedElements) {
 
 function evaluate(flippedElements, blocks) {
   if (flippedElements.length === 2 && blocks[flippedElements[0]].value === blocks[flippedElements[1]].value) {
-    return produce({ updatedBlocks: blocks, isMatch: true }, draftState => {
-      draftState.updatedBlocks[flippedElements[0]].found = true;
-      draftState.updatedBlocks[flippedElements[1]].found = true;
-    });
+    const updatedBlocks = [...blocks];
+    updatedBlocks[flippedElements[0]].found = true;
+    updatedBlocks[flippedElements[1]].found = true;
+    return { updatedBlocks, isMatch: true };
   }
 
   return { isMatch: false };
 }
 
 function unlock(state) {
-  return produce(state, draftState => {
-    draftState.board.isLocked = false;
-  });
+  return { ...state, board: { ...state.board, isLocked: false } };
 }
 
 function flipAndEvaluate(state) {
@@ -68,24 +64,29 @@ function flipAndEvaluate(state) {
     if (evaluationResult.isMatch) {
       const isEverythingFound = !evaluationResult.updatedBlocks.some(block => block.found === false);
 
-      return produce(state, draftState => {
-        if (isEverythingFound) {
-          draftState.state = board.states.victory;
-        }
-        draftState.flippedElements = flippedElements;
-        draftState.selectedIndex = undefined;
-        draftState.board.isLocked = true;
-        draftState.board.blocks = evaluationResult.updatedBlocks;
-      });
+      let boardState;
+
+      if (isEverythingFound) {
+        boardState = board.states.victory;
+      } else {
+        boardState = state.state;
+      }
+
+      return {
+        ...state,
+        state: boardState,
+        flippedElements,
+        selectedIndex: undefined,
+        board: { ...state.board, isLocked: true, blocks: evaluationResult.updatedBlocks }
+      };
     } else {
-      return produce(state, draftState => {
-        draftState.flippedElements = board.flip(state.selectedIndex, state.flippedElements);
-        draftState.selectedIndex = undefined;
-      });
+      return {
+        ...state,
+        flippedElements: board.flip(state.selectedIndex, state.flippedElements),
+        selectedIndex: undefined
+      };
     }
   }
 
-  return produce(state, draftState => {
-    draftState.selectedIndex = undefined;
-  });
+  return { ...state, selectedIndex: undefined };
 }
